@@ -51,6 +51,12 @@ public class Tutorial3 extends Application {
             }
         });
 
+        /*
+         * currentTurnText.setFill(Color.RED);
+         * currentTurnText.setTextOrigin(VPos.TOP);
+         * currentTurnText.setFont(Font.font("Times New Roman", 30));
+         */
+
         setCurrentTurn(currentTurnText, "X");
     
         gameOverMessage.setFill(Color.RED);
