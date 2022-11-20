@@ -44,6 +44,10 @@ public class Tutorial3 extends Application {
             } else if(checkIfColumnWon(board)) {
                 System.out.println("Col Won");
                 checkWhatColWon(board, root, primaryScene, board.winningCol);
+            } else if(checkIfLeftDiagonalWon(board)) {
+                System.out.println("Left Diagonal Won");
+            } else if(checkIfRightDiagonalWon(board)) {
+                System.out.println("Right Diagonal Won");
             }
         });
 
@@ -241,7 +245,7 @@ public class Tutorial3 extends Application {
         return false;
     }
 
-    private void checkWhatColWon(Board board2, Pane root, Scene primaryScene, int winningCol) {
+    public void checkWhatColWon(Board board2, Pane root, Scene primaryScene, int winningCol) {
         //check which column to begin with, so we move in the x-axis
         double beginningPosition = primaryScene.getWidth()/3 * winningCol;
         double rectHalfWidth = (primaryScene.getWidth()/3)/2;
@@ -256,6 +260,29 @@ public class Tutorial3 extends Application {
         return;
     }
    
+    public boolean checkIfLeftDiagonalWon(Board board) {
+        if(board.board[0][0].equals(" ")) {
+            return false;
+        } 
+        
+        if(board.board[0][0].equals(board.board[1][1]) && board.board[1][1].equals(board.board[2][2])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean checkIfRightDiagonalWon(Board board) {
+        if(board.board[0][2].equals(" ")) {
+            return false;
+        }
+        
+        if(board.board[0][2].equals(board.board[1][1]) && board.board[1][1].equals(board.board[2][0])) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 
