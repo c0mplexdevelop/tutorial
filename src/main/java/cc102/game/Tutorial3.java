@@ -186,11 +186,13 @@ public class Tutorial3 extends Application {
     public void restartIfDraw(Pane root, Scene primaryScene, Text gameOverMessage) {
         PauseTransition transition = new PauseTransition(Duration.seconds(0.84));
         transition.setOnFinished(event -> {
+            root.getChildren().clear();
             rects = createFXBoard(rects, primaryScene, root);
             board.board = createBoard();
             currentTurn = "X";
             gameOverMessage.setText("DRAW!");
             gameOverMessage.setX((primaryScene.getWidth() / 2) - (gameOverMessage.getLayoutBounds().getWidth() / 2));
+            restart(root, primaryScene, gameOverMessage);
         });
 
         transition.play();
