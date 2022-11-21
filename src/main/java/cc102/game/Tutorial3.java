@@ -39,13 +39,15 @@ public class Tutorial3 extends Application {
                 restartIfDraw(root, primaryScene, gameOverMessage);
             } else if(checkIfRowWon(board)) {
                 System.out.println("Row won");
-                checkWhatRowWon(board, root, primaryScene, board.winningRow);
-                restartIfRowWon(root, primaryScene, gameOverMessage);
+                drawLineOnRowWon(board, root, primaryScene, board.winningRow);
+                restartIfLetterWon
+        (root, primaryScene, gameOverMessage);
             } else if(checkIfColumnWon(board)) {
                 System.out.println("Col Won");
-                checkWhatColWon(board, root, primaryScene, board.winningCol);
+                drawLineOnColumnWon(board, root, primaryScene, board.winningCol);
             } else if(checkIfLeftDiagonalWon(board)) {
                 System.out.println("Left Diagonal Won");
+                drawLineLeftDiagonalWon(board, root, primaryScene);
             } else if(checkIfRightDiagonalWon(board)) {
                 System.out.println("Right Diagonal Won");
             }
@@ -199,7 +201,7 @@ public class Tutorial3 extends Application {
         return false;
     }
 
-    public void checkWhatRowWon(Board board, Pane root, Scene scene, int winningRow) {
+    public void drawLineOnRowWon(Board board, Pane root, Scene scene, int winningRow) {
         // Get the index position of the correct Rect, we go down as checking for rows is down
         // This multiplies 3 by 0, 1, or 2. If its 0, then we check 0,1,2; if its 1, we check 3,4,5; and if its 2, we check 6,7,8
 
@@ -216,7 +218,7 @@ public class Tutorial3 extends Application {
         return;
     }
 
-    public void restartIfRowWon(Pane root, Scene primaryScene, Text gameOverMessage) {
+    public void restartIfLetterWon(Pane root, Scene primaryScene, Text gameOverMessage) {
         PauseTransition transition = new PauseTransition(Duration.seconds(0.84));
         transition.setOnFinished(event -> {
             rects = createFXBoard(rects, primaryScene, root);
@@ -245,7 +247,7 @@ public class Tutorial3 extends Application {
         return false;
     }
 
-    public void checkWhatColWon(Board board2, Pane root, Scene primaryScene, int winningCol) {
+    public void drawLineOnColumnWon(Board board2, Pane root, Scene primaryScene, int winningCol) {
         //check which column to begin with, so we move in the x-axis
         double beginningPosition = primaryScene.getWidth()/3 * winningCol;
         double rectHalfWidth = (primaryScene.getWidth()/3)/2;
@@ -270,6 +272,10 @@ public class Tutorial3 extends Application {
         }
 
         return false;
+    }
+
+    public void drawLineLeftDiagonalWon(Board board, Pane root, Scene primaryScene) {
+        
     }
 
     public boolean checkIfRightDiagonalWon(Board board) {
