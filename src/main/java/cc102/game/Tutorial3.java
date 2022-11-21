@@ -40,17 +40,19 @@ public class Tutorial3 extends Application {
             } else if(checkIfRowWon(board)) {
                 System.out.println("Row won");
                 drawLineOnRowWon(board, root, primaryScene, board.winningRow);
-                restartIfLetterWon
-        (root, primaryScene, gameOverMessage);
+                restartIfLetterWon(root, primaryScene, gameOverMessage);
             } else if(checkIfColumnWon(board)) {
                 System.out.println("Col Won");
                 drawLineOnColumnWon(board, root, primaryScene, board.winningCol);
+                restartIfLetterWon(root, primaryScene, gameOverMessage);
             } else if(checkIfLeftDiagonalWon(board)) {
                 System.out.println("Left Diagonal Won");
                 drawLineLeftDiagonalWon(board, root, primaryScene);
             } else if(checkIfRightDiagonalWon(board)) {
                 System.out.println("Right Diagonal Won");
             }
+
+            System.out.println(root.getChildren().toString());
         });
 
         /*
@@ -172,6 +174,15 @@ public class Tutorial3 extends Application {
         return true;
     }
 
+    public void restart(Pane root, Scene primaryScene, Text gameOverMessage) {
+        // Update the currentTurnText properly, as if X won, it remains as O after restart
+        setCurrentTurn(currentTurnText, currentTurn);
+        // We just need to re-add the gameOverMessage and currentTurnText
+        root.getChildren().add(gameOverMessage);
+        root.getChildren().add(currentTurnText);
+
+    }
+
     public void restartIfDraw(Pane root, Scene primaryScene, Text gameOverMessage) {
         PauseTransition transition = new PauseTransition(Duration.seconds(0.84));
         transition.setOnFinished(event -> {
@@ -183,6 +194,7 @@ public class Tutorial3 extends Application {
         });
 
         transition.play();
+        primaryScene.setFill(Color.BLACK);
     }
 
     public boolean checkIfRowWon(Board board) {
@@ -221,11 +233,14 @@ public class Tutorial3 extends Application {
     public void restartIfLetterWon(Pane root, Scene primaryScene, Text gameOverMessage) {
         PauseTransition transition = new PauseTransition(Duration.seconds(0.84));
         transition.setOnFinished(event -> {
+            //We clear the group since it would infinitely expand and take alot of memory. Clearing it, then rebuilding it is easier
+            root.getChildren().clear();
             rects = createFXBoard(rects, primaryScene, root);
             board.board = createBoard();
             currentTurn = "X";
             gameOverMessage.setText(String.format("%s WON", winningPlayer.toUpperCase()));
             gameOverMessage.setX((primaryScene.getWidth() / 2) - (gameOverMessage.getLayoutBounds().getWidth() / 2));
+            restart(root, primaryScene, gameOverMessage);
         });
 
         transition.play();
@@ -251,7 +266,8 @@ public class Tutorial3 extends Application {
         //check which column to begin with, so we move in the x-axis
         double beginningPosition = primaryScene.getWidth()/3 * winningCol;
         double rectHalfWidth = (primaryScene.getWidth()/3)/2;
-        Line winningLine = new Line(beginningPosition + rectHalfWidth + 3, 100 , beginningPosition + rectHalfWidth + 3, primaryScene.getHeight());
+        Line winningLine = new Line(beginningPosition + rectHalfWidth + 3, 105 , beginningPosition + rectHalfWidth + 3, primaryScene.getHeight());
+        // Its 105 since we put it within the rectangle, its probably like (Stroke Width / # of suqares) + rect stroke width + 1
         // For the above, we added +3 to centralize the line stroke on the center. Essentially, just do strokeWidth/3
         winningLine.setStroke(Color.LIGHTBLUE);
         winningLine.setStrokeWidth(10);
