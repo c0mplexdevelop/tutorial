@@ -51,8 +51,6 @@ public class Tutorial3 extends Application {
             } else if(checkIfRightDiagonalWon(board)) {
                 System.out.println("Right Diagonal Won");
             }
-
-            System.out.println(root.getChildren().toString());
         });
 
         /*
@@ -233,6 +231,7 @@ public class Tutorial3 extends Application {
     }
 
     public void restartIfLetterWon(Pane root, Scene primaryScene, Text gameOverMessage) {
+        stopRectanglesFromReceivingClicks(rects);
         PauseTransition transition = new PauseTransition(Duration.seconds(0.84));
         transition.setOnFinished(event -> {
             //We clear the group since it would infinitely expand and take alot of memory. Clearing it, then rebuilding it is easier
@@ -306,5 +305,11 @@ public class Tutorial3 extends Application {
         }
 
         return false;
+    }
+
+    public void stopRectanglesFromReceivingClicks(List<Rectangle> rects) {
+        for(Rectangle rect : rects) {
+            rect.setOnMouseClicked(null);
+        }
     }
 }
