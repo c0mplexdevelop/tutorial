@@ -35,9 +35,7 @@ public class Tutorial3 extends Application {
         final Text gameOverMessage = new Text(primaryScene.getWidth()/2, 30, "");
 
         primaryScene.setOnMouseClicked(mouseEvent -> {
-            if(checkIfDraw(board)) {
-                restartIfDraw(root, primaryScene, gameOverMessage);
-            } else if(checkIfRowWon(board)) {
+            if(checkIfRowWon(board)) {
                 System.out.println("Row won");
                 drawLineOnRowWon(board, root, primaryScene, board.winningRow);
                 restartIfLetterWon(root, primaryScene, gameOverMessage);
@@ -48,8 +46,12 @@ public class Tutorial3 extends Application {
             } else if(checkIfLeftDiagonalWon(board)) {
                 System.out.println("Left Diagonal Won");
                 drawLineLeftDiagonalWon(board, root, primaryScene);
+                restartIfLetterWon(root, primaryScene, gameOverMessage);
             } else if(checkIfRightDiagonalWon(board)) {
                 System.out.println("Right Diagonal Won");
+                restartIfLetterWon(root, primaryScene, gameOverMessage);
+            } else if(checkIfDraw(board)) {
+                restartIfDraw(root, primaryScene, gameOverMessage);
             }
         });
 
@@ -308,6 +310,8 @@ public class Tutorial3 extends Application {
     }
 
     public void stopRectanglesFromReceivingClicks(List<Rectangle> rects) {
+        // After winning, the game, we remove the functionality to be clicked from the rectangles
+        // This is to prevent more letters to be placed on the board
         for(Rectangle rect : rects) {
             rect.setOnMouseClicked(null);
         }
