@@ -49,6 +49,7 @@ public class Tutorial3 extends Application {
                 restartIfLetterWon(root, primaryScene, gameOverMessage);
             } else if(checkIfRightDiagonalWon(board)) {
                 System.out.println("Right Diagonal Won");
+                drawLineRightDiagonalWon(board, root, primaryScene);
                 restartIfLetterWon(root, primaryScene, gameOverMessage);
             } else if(checkIfDraw(board)) {
                 restartIfDraw(root, primaryScene, gameOverMessage);
@@ -295,6 +296,10 @@ public class Tutorial3 extends Application {
     }
 
     public void drawLineLeftDiagonalWon(Board board, Pane root, Scene primaryScene) {
+        /*
+         * Take the left edge of the screen, and the position where rects start
+         * then draw a line to the bottom right of the screen
+         */
         Line winningLine = new Line(0, 105,  primaryScene.getWidth(),
                 primaryScene.getHeight());
 
@@ -319,6 +324,25 @@ public class Tutorial3 extends Application {
 
         return false;
     }
+
+
+    public void drawLineRightDiagonalWon(Board board, Pane root, Scene primaryScene) {
+        /*
+         * Take the right edge of the screen, and the position where rects start
+         * then draw a line to the bottom left corner
+         */
+        Line winningLine = new Line(primaryScene.getWidth(), 105, 0,
+                primaryScene.getHeight());
+
+        winningLine.setStrokeWidth(10);
+        winningLine.setStroke(Color.LIGHTBLUE);
+        winningLine.toBack();
+
+        root.getChildren().add(winningLine);
+
+        return;
+    }
+    
 
     public void stopRectanglesFromReceivingClicks(List<Rectangle> rects) {
         // After winning, the game, we remove the functionality to be clicked from the rectangles
