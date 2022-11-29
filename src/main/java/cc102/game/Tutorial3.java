@@ -287,6 +287,7 @@ public class Tutorial3 extends Application {
         } 
         
         if(board.board[0][0].equals(board.board[1][1]) && board.board[1][1].equals(board.board[2][2])) {
+            winningPlayer = board.board[0][0];
             return true;
         }
 
@@ -294,7 +295,16 @@ public class Tutorial3 extends Application {
     }
 
     public void drawLineLeftDiagonalWon(Board board, Pane root, Scene primaryScene) {
-        
+        Line winningLine = new Line(0, 105,  primaryScene.getWidth(),
+                primaryScene.getHeight());
+
+        winningLine.setStrokeWidth(10);
+        winningLine.setStroke(Color.LIGHTBLUE);
+        winningLine.toBack();
+
+        root.getChildren().add(winningLine);
+
+        return;
     }
 
     public boolean checkIfRightDiagonalWon(Board board) {
@@ -303,6 +313,7 @@ public class Tutorial3 extends Application {
         }
         
         if(board.board[0][2].equals(board.board[1][1]) && board.board[1][1].equals(board.board[2][0])) {
+            winningPlayer = board.board[0][2];
             return true;
         }
 
