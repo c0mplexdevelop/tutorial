@@ -20,7 +20,7 @@ import java.util.Arrays;
 public class Tutorial3 extends Application {
     static String currentTurn = "X";
     static Text currentTurnText = new Text(0, 0, String.format("Current Turn: %s", currentTurn));
-    private static Color backgroudColor = Color.PINK;
+    private static Color backgroundColor = Color.PINK;
     private static Color winningLineColor = Color.web("#C25A7C");
     Board board = new Board(createBoard());
     List<Rectangle> rects = new ArrayList<Rectangle>();
@@ -65,7 +65,7 @@ public class Tutorial3 extends Application {
     
         gameOverMessage.setFill(Color.BLACK);
         gameOverMessage.setTextOrigin(VPos.TOP);
-        gameOverMessage.setFont(Font.font("Times New Roman", 25));
+        gameOverMessage.setFont(Font.font("Courier New", 25));
 
 
         rects = createFXBoard(rects, primaryScene, root);
@@ -73,7 +73,7 @@ public class Tutorial3 extends Application {
         // root.getChildren().addAll(rects);
         root.getChildren().add(currentTurnText);
         root.getChildren().add(gameOverMessage);
-        primaryScene.setFill(backgroudColor);
+        primaryScene.setFill(backgroundColor);
         primaryStage.setScene(primaryScene);
         primaryStage.show();
 
@@ -96,12 +96,12 @@ public class Tutorial3 extends Application {
             for(int col = 0; col < 3; col++) {
                 // Rect takes the first 2 arguments as WIDTH AND LENGTH, with the last one as Color.
                 Rectangle rect = new Rectangle(scene.getWidth()/3, 600/3);
-                rect.setFill(backgroudColor);
+                rect.setFill(backgroundColor);
 
                 final Text boardMove = new Text("X");
                 boardMove.setFill(Color.BLACK);
                 
-                boardMove.setFont(Font.font("Times New Roman", 50));
+                boardMove.setFont(Font.font("Courier New", 50));
 
                 rect.setX(scene.getWidth()/3 * col);
                 rect.setY(600/3 * row + 100);
@@ -160,7 +160,7 @@ public class Tutorial3 extends Application {
     public static void setCurrentTurn(Text currentTurn, String turn) {
         currentTurn.setText(String.format("Current Turn: %s", turn));
         currentTurn.setTextOrigin(VPos.TOP);
-        currentTurn.setFont(Font.font("Times New Roman", 30));
+        currentTurn.setFont(Font.font("Courier New", 25));
     }
 
     public boolean checkIfDraw(Board board) {
@@ -176,7 +176,7 @@ public class Tutorial3 extends Application {
     }
 
     public void restart(Pane root, Scene primaryScene, Text gameOverMessage) {
-        primaryScene.setFill(Color.PINK);
+        primaryScene.setFill(backgroundColor);
         // Update the currentTurnText properly, as if X won, it remains as O after restart
         setCurrentTurn(currentTurnText, currentTurn);
         // We just need to re-add the gameOverMessage and currentTurnText
@@ -198,7 +198,7 @@ public class Tutorial3 extends Application {
         });
 
         transition.play();
-        primaryScene.setFill(Color.BLACK);
+        primaryScene.setFill(backgroundColor);
     }
 
     public boolean checkIfRowWon(Board board) {
@@ -224,7 +224,7 @@ public class Tutorial3 extends Application {
         double beginningPosition = scene.getWidth()/3 * winningRow + 100;
         double rectHalfWidth = 100;
 
-        Line winningLine = new Line(0, beginningPosition+rectHalfWidth, scene.getWidth(), beginningPosition+rectHalfWidth);
+        Line winningLine = new Line(0, beginningPosition+rectHalfWidth - 2, scene.getWidth(), beginningPosition+rectHalfWidth);
         winningLine.setStroke(winningLineColor);
         winningLine.setStrokeWidth(10);
         winningLine.toBack();
@@ -271,7 +271,7 @@ public class Tutorial3 extends Application {
         //check which column to begin with, so we move in the x-axis
         double beginningPosition = primaryScene.getWidth()/3 * winningCol;
         double rectHalfWidth = (primaryScene.getWidth()/3)/2;
-        Line winningLine = new Line(beginningPosition + rectHalfWidth + 3, 105 , beginningPosition + rectHalfWidth + 3, primaryScene.getHeight());
+        Line winningLine = new Line(beginningPosition + rectHalfWidth - 3, 105 , beginningPosition + rectHalfWidth + 3, primaryScene.getHeight());
         // Its 105 since we put it within the rectangle, its probably like (Stroke Width / # of suqares) + rect stroke width + 1
         // For the above, we added +3 to centralize the line stroke on the center. Essentially, just do strokeWidth/3
         winningLine.setStroke(winningLineColor);
